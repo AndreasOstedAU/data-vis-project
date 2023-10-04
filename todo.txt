@@ -1,7 +1,7 @@
 Dette er en knap så tom to-do liste
 
 Check dem hvor der er unknown-scewed distribution
-Lav kort så det er zoomet ud til hele USA
+(Clara) Lav kort så det er zoomet ud til hele USA
 Lav en knap pr by, hvor man så zoomer ind på byen
 	- Dette skal også ændre de andre plots i dashboardet
 Lav det sådan at de andre grafer opdaterer når man markerer punkter
