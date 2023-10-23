@@ -7,6 +7,11 @@ import plotly.express as px
 from dash import Dash, dcc
 import dash_bootstrap_components as dbc
 
+username = 'ClaraWolff'
+repository = 'Gittest'
+file_path = 'Kanaler.csv'
+access_token = "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"
+
 data = pd.read_csv("https://raw.githubusercontent.com/AndreasOstedAU/data-vis-project/main/Data/homicide_data.csv?token=GHSAT0AAAAAACIEN73X6W7JSGZ3MSRL46H2ZIUACCA", encoding="ISO-8859-1")
 
 data['victim_full_name'] = data['victim_first'] +  ' ' + data['victim_last']
@@ -99,7 +104,7 @@ def display_race(selected_race,selected_sex,city):
             zoom=7,
             height=500,
         )
-    fig.update_layout(mapbox_style="open-street-map", title = f'Murders in {city}')
+    fig.update_layout(mapbox_style="open-street-map", title = f'Murders in {city}',mapbox_zoom=3)
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     fig.update_layout(showlegend = False) 
     fig.update_layout(width=500, height=300)
