@@ -31,7 +31,8 @@ sexoptions=[{'label': 'Select all', 'value': 'all_values'}]+[{'label': r, 'value
 cityoptions=[{'label': 'Select all', 'value': 'all_values'}]+[{'label': city, 'value': city} for city in sorted(data['city'].unique())]
 
 app.layout = html.Div([
-    html.H4('Homocides'),
+    html.H4(id='title-output',style={"margin-bottom":"5px","margin-top":"1px","font-size":"20px","text-align":"center"}),
+    html.Hr(),
     html.Div([
         dcc.Dropdown(
             id="race-dropdown",
@@ -39,7 +40,7 @@ app.layout = html.Div([
             options=raceoptions,
             value=None,
             clearable=False,
-            style={"width": "200px", "display": "inline-block"}
+            style={"width": "200px", "display": "inline-block","margin-top":"0"}
         ),
         dcc.Dropdown(
             id="sex-dropdown",
@@ -47,23 +48,23 @@ app.layout = html.Div([
             placeholder="Select sex",
             value=None,
             clearable=False,
-            style={"width": "200px", "display": "inline-block"}
+            style={"width": "200px", "display": "inline-block","margin-top":"0"}
         ),
         dcc.Dropdown(
             id='city-dropdown',
             placeholder="Select city",
             options=cityoptions,
             value=None,  # Set the default value
-            style={"width": "200px", "display": "inline-block"}
+            style={"width": "200px", "display": "inline-block","margin-top":"0"}
         ),
     ],
-    style={"display":"flex"}),
+    style={"display":"flex",'vertical-align': 'top'}),
     html.Div([
-    html.Div(dcc.Graph(id='murder-map')),
-    html.Div(dcc.Graph(id='getting-started-x-graph')),
-    html.Div(dcc.Graph(id='getting-started-x-graph2'))
+    html.Div(dcc.Graph(id='murder-map'),style={"width":"auto"}),
+    html.Div(dcc.Graph(id='getting-started-x-graph'),style={"width":"auto"}),
+    html.Div(dcc.Graph(id='getting-started-x-graph2'),style={"width":"auto"})
     ],
-    style={"display":"flex"},
+    style={"display":"flex",'vertical-align': 'top','width':"100%","height":"100%","flex-wrap": "wrap"},
 ),
 dcc.Store(id='selected-city')])
 
@@ -136,31 +137,33 @@ def display_race(selected_race,selected_sex,city):
             #color_discrete_sequence=["blue"],
             height=500,
         )
-    title=f'Murders in {city}' if city in city_list else f'Murders in the US'
-    figall.update_layout(mapbox_style="light", mapbox_accesstoken=mapbox_token, title = title,mapbox_zoom=2.6,mapbox_center={"lat": 37.0902, "lon": -95.7129})
-    figall.update_layout(margin={"r": 5, "t": 40, "l": 5, "b": 5})
+    #title=f'Murders in {city}' if city in city_list else f'Murders in the US'
+    figall.update_layout(mapbox_style="light", mapbox_accesstoken=mapbox_token,mapbox_zoom=2.6,mapbox_center={"lat": 37.0902, "lon": -95.7129})
+    figall.update_layout(margin={"r": 5, "t": 5, "l": 5, "b": 5})
     figall.update_layout(showlegend = True) 
-    figall.update_layout(width=500, height=340)
+    figall.update_layout(width=500, height=290)
 
-    figzoom.update_layout(mapbox_style="light", mapbox_accesstoken=mapbox_token,title =title,mapbox_zoom=9)
-    figzoom.update_layout(margin={"r": 5, "t": 40, "l": 5, "b": 5})
+    figzoom.update_layout(mapbox_style="light", mapbox_accesstoken=mapbox_token,mapbox_zoom=9)
+    figzoom.update_layout(margin={"r": 5, "t": 5, "l": 5, "b": 5})
     figzoom.update_layout(showlegend = True,legend=dict(
     yanchor="top",
     y=0.99,
     xanchor="left",
     x=0.01
 )) 
-    figzoom.update_layout(width=500, height=340)
+    figzoom.update_layout(width=500, height=290)
 
     fig1 = go.Figure(
         data=go.Bar(x=np.unique(filtered_data["disposition"]), y=filtered_data["disposition"].value_counts(),
                     marker_color="Gold"))
-    fig1.update_layout(dragmode='zoom')
+    fig1.update_layout(dragmode='zoom',width=500, height=290)
+    fig1.update_layout(margin={"r": 5, "t": 5, "l": 5, "b": 5})
 
     fig2 = go.Figure(
         data=go.Bar(x=np.unique(filtered_data["victim_age"]), y=filtered_data["victim_age"].value_counts(),
                     marker_color="Gold"))
-    fig2.update_layout(dragmode='zoom')
+    fig2.update_layout(dragmode='zoom',width=500, height=290)
+    fig2.update_layout(margin={"r": 5, "t": 5, "l": 5, "b": 5})
 
 
 
@@ -191,6 +194,16 @@ def update_selected_city(click_data):
 def update_city_dropdown(selected_city):
     return selected_city
 
+@app.callback(
+    Output('title-output', 'children'),
+    [Input('city-dropdown', 'value')]
+)
+def update_title(city):
+    city_list = [city for city in data['city'].unique()]
+    if city in city_list:
+        return f'Murders in {city}' 
+    else:
+        return 'Murders in the US'
 
 if __name__ == "__main__":
     app.run_server(debug=True)
