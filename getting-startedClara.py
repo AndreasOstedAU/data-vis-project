@@ -1,4 +1,4 @@
-from dash import Dash, dcc, html, Input, Output
+from dash import Dash, dcc, html, Input, Output,State
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
@@ -81,7 +81,13 @@ def make_map(df):
 
     )
     return fig
-
+datamap=[]
+def putdata(df){
+    datamap=df
+}
+def getdata(){
+    return datamap
+}
 @app.callback(
     [Output("murder-map", "figure"),
      Output("getting-started-x-graph", "figure"),
@@ -233,14 +239,14 @@ def update_title(city):
     [Output('murder-map', 'figure',allow_duplicate=True),
     Output('reset-button', 'n_clicks')],
     [Input('city-dropdown', 'value'),
-     Input('murder-map','figure'),
      Input('murder-map', 'selectedData'),
-     Input('reset-button', 'n_clicks')],prevent_initial_call=True
+     Input('reset-button', 'n_clicks')],
+     [State('murder-map','figure')],
+     prevent_initial_call=True
 )
-def update_map(selected_city, mapfig,selected_data, n_clicks):
+def update_map(selected_city,selected_data, n_clicks,mapfig):
         fig = mapfig
-        print(mapfig)
-        
+        print(type(mapfig))
 
         if selected_data:
             latitudes = [point['lat'] for point in selected_data['points']]
