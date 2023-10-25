@@ -2,6 +2,7 @@
 
 To do:
 
+- Find problemer med data og fiks dem
 - Få fat i indbyggertal i byerne (Clara)
 - Lav prikker forskellige størrelser at efter antal af mord
 	- Normaliseret efter indbyggertal (Clara)
