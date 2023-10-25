@@ -2,8 +2,6 @@
 
 To do:
 
-- Få styr på målgruppe
-- Tid på mordet?
 - Få fat i indbyggertal i byerne (Clara)
 - Lav prikker forskellige størrelser at efter antal af mord
 	- Normaliseret efter indbyggertal (Clara)
@@ -17,6 +15,8 @@ To do:
 
 Klaret:
 
+- Få styr på målgruppe
+- Tid på mordet?
 - (Clara) Lav en knap pr by, hvor man så zoomer ind på byen
 	- Dette skal også ændre de andre plots i dashboardet
 - Kombiner klik og filter, så filteret opdaterer når man klikker på graferne, f.eks. Hvis vi klikker på "Asian", så skal filteret skiftes til "Asian"
