@@ -17,7 +17,6 @@ file_path = 'Kanaler.csv'
 access_token = "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"
 
 data = pd.read_csv("https://raw.githubusercontent.com/AndreasOstedAU/data-vis-project/main/Data/homicide_data.csv?token=GHSAT0AAAAAACIEN73X6W7JSGZ3MSRL46H2ZIUACCA", encoding="ISO-8859-1")
-
 data['victim_full_name'] = data['victim_first'] +  ' ' + data['victim_last']
 arrest = data["disposition"]
 raceall = data["victim_race"]

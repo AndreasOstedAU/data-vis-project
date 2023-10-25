@@ -4,9 +4,9 @@ To do:
 
 - Få styr på målgruppe
 - Tid på mordet?
-- Få fat i indbyggertal i byerne
+- Få fat i indbyggertal i byerne (Clara)
 - Lav prikker forskellige størrelser at efter antal af mord
-	- Normaliseret efter indbyggertal
+	- Normaliseret efter indbyggertal (Clara)
 - Check dem hvor der er unknown-scewed distribution
  - Hvad gør vi med unknown og når alder er 0 og 1?
 	- Andre værdier som er urealistiske
