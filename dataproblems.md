@@ -1,0 +1,3 @@
+ - Overrepræsentation af victim_age = 0 (unknown bliver til 0)
+ - Håndtere unknown på victim_race i Kansas City 
+    - Generelt er der tit unknown på victim_race sammen med victim_age 
