@@ -3,15 +3,19 @@
 To do:
 
 - Find problemer med data og fiks dem
-- Få fat i indbyggertal i byerne (Clara)
-- Lav prikker forskellige størrelser at efter antal af mord
-	- Normaliseret efter indbyggertal (Clara)
-- Check dem hvor der er unknown-scewed distribution
+- Check dem hvor der er unknown-skewed distribution
  - Hvad gør vi med unknown og når alder er 0 og 1?
-	- Andre værdier som er urealistiske
-- Lav det sådan at de andre grafer opdaterer når man markerer punkter
-- Lav legend så farvene altid er til den samme værdi
-- Skal vi have noget andet som farver på kortet
+	- Andre værdier som er urealistiske?
+- Lav legend så farvene altid er til den samme værdi (open: rød)
+- Lav barchart til antal mord per år
+- Integrer sankey diagram og tids-spiral plot 
+	- Sankey skal kun opdatere på city selection
+- Find bedste arrangement af figurer 
+- Normaliser med antal år i data for hver by også (Andreas)
+- Lav hoverdata pæn (alle figurer) og beslut hvilken information der skal vises
+- Juster zoom-niveau ved valg af city
+- Sortering af barchart (alfabetisk)
+- Figurer hvis der ikke er noget data i filtrering (ideelt kort hvor der står "No data")
 
 
 Klaret:
@@ -22,3 +26,8 @@ Klaret:
 	- Dette skal også ændre de andre plots i dashboardet
 - Kombiner klik og filter, så filteret opdaterer når man klikker på graferne, f.eks. Hvis vi klikker på "Asian", så skal filteret skiftes til "Asian"
 - (Andreas) Opdater zoom på aktuel kortvisning (by eller hele USA)
+- Få fat i indbyggertal i byerne (Clara)
+- Lav prikker forskellige størrelser at efter antal af mord
+	- Normaliseret efter indbyggertal (Clara)
+- Lav det sådan at de andre grafer opdaterer når man markerer punkter
+- Skal vi have noget andet som farver på kortet (nej)
