@@ -16,6 +16,8 @@ To do:
 - Juster zoom-niveau ved valg af city
 - Sortering af barchart (alfabetisk)
 - Figurer hvis der ikke er noget data i filtrering (ideelt kort hvor der står "No data")
+- **Opdater colorscale på spiral plot med task-driven color coding (histogram equalization)**
+- Evt. filtering af andre plots ved klik på spiral plot
 
 
 Klaret:
