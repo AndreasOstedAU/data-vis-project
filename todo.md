@@ -6,18 +6,18 @@ To do:
 - Check dem hvor der er unknown-skewed distribution
  - Hvad gør vi med unknown og når alder er 0 og 1?
 	- Andre værdier som er urealistiske?
-- Lav legend så farvene altid er til den samme værdi (open: rød)
+-[OK] Lav legend så farvene altid er til den samme værdi (open: rød)
 - Lav barchart til antal mord per år
 - Integrer sankey diagram og tids-spiral plot 
 	- Sankey skal kun opdatere på city selection
 - Find bedste arrangement af figurer 
-- Normaliser med antal år i data for hver by også (Andreas)
+- [OK] Normaliser med antal år i data for hver by også (Andreas)
 - Lav hoverdata pæn (alle figurer) og beslut hvilken information der skal vises
 - Juster zoom-niveau ved valg af city
-- Sortering af barchart (alfabetisk)
+- [OK] Sortering af barchart (alfabetisk)
 - Figurer hvis der ikke er noget data i filtrering (ideelt kort hvor der står "No data")
-- **Opdater colorscale på spiral plot med task-driven color coding (histogram equalization)**
-- Evt. filtering af andre plots ved klik på spiral plot
+- [OK] **Opdater colorscale på spiral plot med task-driven color coding (histogram equalization)**
+- [OK] Evt. filtering af andre plots ved klik på spiral plot
 
 
 Klaret:
