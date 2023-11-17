@@ -125,7 +125,7 @@ data = data.sort_values(by=['victim_age'], ascending=True)
 grouped_df = data.groupby(['disposition','victim_race','victim_sex','age_binned']).size().reset_index(name='n_obs')
 #grouped_df = grouped_df.rename(columns={"uid":"count"})
 #print(grouped_df['n_obs'].sum())
-print(grouped_df.sum())
+#print(grouped_df.sum())
 data = pd.read_csv("https://raw.githubusercontent.com/AndreasOstedAU/data-vis-project/main/Data/homicide_data.csv")
 grouped_df = data
 
