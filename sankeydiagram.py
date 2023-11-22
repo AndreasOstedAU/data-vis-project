@@ -15,15 +15,17 @@ app.layout = html.Div([
 ])
 
 def genSankey(df,cat_cols=[],value_cols='',title='Sankey Diagram'):
-    df['victim_age'].mask(df['victim_age'] == 'Unknown', 0, inplace=True)
-    mask = df['victim_age'] == 0
+    df['victim_age'].mask(df['victim_age'] == 'Unknown', -2, inplace=True)
+    mask = df['victim_age'] == 'Unknown'
     df = df[~mask]
     df['victim_sex'].mask(df['victim_sex'] == 'Unknown', 'Unknown sex', inplace=True)
     df['victim_race'].mask(df['victim_race'] == 'Unknown', 'Unknown race', inplace=True)
     df['victim_age'] = pd.to_numeric(df['victim_age'])
-    df['age_binned'] = pd.cut(x=df['victim_age'], bins=[-1,9,19, 29, 39, 49, 59, 69, 79, 89, 99, 109], labels=['1-9','10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99','100+'])
+    df['age_binned'] = pd.cut(x=df['victim_age'], bins=[-3,-1,9,19, 29, 39, 49, 59, 69, 79, 89, 99, 109], labels=['Unknown age','0-9','10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99','100+'])
     df = df.sort_values(by=['victim_age'], ascending=True)
     df = df.groupby(['disposition','victim_race','victim_sex','age_binned']).size().reset_index(name='n_obs')
+    zeromask = df['n_obs'] == 0
+    df = df[~zeromask]
 
     # maximum of 6 value cols -> 6 colors
     colorPalette = ['#000000','#000000','#000000','#000000','#000000']
@@ -32,14 +34,14 @@ def genSankey(df,cat_cols=[],value_cols='',title='Sankey Diagram'):
     for catCol in cat_cols:
         labelListTemp =  list(set(df[catCol].values))
         if catCol=='age_binned':
-            labelListTemp = ['1-9','10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99','100+']
+            labelListTemp = ['Unknown age','0-9','10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99','100+']
         colorNumList.append(len(labelListTemp))
         labelList = labelList + labelListTemp
         
     # remove duplicates from labelList
     del labelList[12:23]
     labelList = list(dict.fromkeys(labelList))
-    labelList = labelList + ['1-9','10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99','100+']
+    labelList = labelList + ['Unknown age','0-9','10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99','100+']
     
     # define colors based on number of levels
     colorList = []
@@ -61,27 +63,41 @@ def genSankey(df,cat_cols=[],value_cols='',title='Sankey Diagram'):
     genderList = list(df['victim_sex'].unique())
     raceList = list(df['victim_race'].unique())
     ageList = list(df['age_binned'].unique())
+    #print(list(df['age_binned']))
     presentList = dispList + genderList + raceList + ageList
-    x = [0.001, 0.001, 0.001, 0.33, 0.33, 0.33, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999]
-    y = [0.3, 0.5, 0.8, 0.2, 0.6, 0.8, 0.1, 0.3, 0.4, 0.6, 0.8, 0.9, 0.001, 1/10, 2/10, 3/10, 4/10, 5/10, 6/10, 7/10, 8/10, 9/10, 0.999]
+    print(presentList)
+
+    x = [0.001, 0.001, 0.001, 0.33, 0.33, 0.33, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999]
+    y = [0.3, 0.5, 0.8, 0.2, 0.6, 0.8, 0.1, 0.3, 0.4, 0.6, 0.8, 0.9, 0.999, 0.001, 1.5/11, 2.5/11, 4/11, 5/11, 6/11, 7/11, 0.7, 0.75, 0.8, 0.9]
+    print(x)
+    print(y)
     deleteList = []
 
-    allList = ['Closed by arrest','Open/No arrest', 'Closed without arrest', 'Male', 'Female', 'Unknown sex', 'Black', 'Hispanic', 'White', 'Other', 'Asian', 'Unknown race','1-9','10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99','100+']
+    allList = ['Closed by arrest','Open/No arrest', 'Closed without arrest', 'Male', 'Female', 'Unknown sex', 'Black', 'Hispanic', 'White', 'Other', 'Asian', 'Unknown race','100+','Unknown age','0-9','10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99']
     
     for i in range(len(allList)):
         if allList[i] not in presentList:
             deleteList.append(i)
     
+    print(deleteList)
+    print(allList)
+
     for j in range(len(deleteList)):
         del allList[deleteList[j]-j]
         del y[deleteList[j]-j]
         del x[deleteList[j]-j]
+
+    print(allList)
+    print(x)
+    print(y)
 
     #new stuff
     sourceTargetDf['source'] = pd.Categorical(sourceTargetDf['source'], allList)
     sourceTargetDf['target'] = pd.Categorical(sourceTargetDf['target'], allList)
     sourceTargetDf.sort_values(['source', 'target'], inplace = True)
     sourceTargetDf.reset_index(drop=True)
+    print(sourceTargetDf['target'])
+    print(sourceTargetDf['source'])
         
     # add index for source-target pair
     sourceTargetDf['sourceID'] = sourceTargetDf['source'].apply(lambda x: labelList.index(x))
@@ -128,6 +144,8 @@ grouped_df = data.groupby(['disposition','victim_race','victim_sex','age_binned'
 #print(grouped_df.sum())
 data = pd.read_csv("https://raw.githubusercontent.com/AndreasOstedAU/data-vis-project/main/Data/homicide_data.csv")
 grouped_df = data
+#grouped_df = grouped_df[grouped_df['city']=='Baltimore']
+#print(len(grouped_df[grouped_df['victim_age']>100]))
 
 #my_sankey = get_sankey(grouped_df, ['disposition','victim_sex','victim_race','age_binned'],'count')
 
