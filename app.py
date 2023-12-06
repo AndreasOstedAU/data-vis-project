@@ -166,7 +166,7 @@ def make_spiral_plot(df):
     df_summary['constant_value'] = 1
 
 
-    df_summary['hovertemplate'] = df_summary.apply(lambda row: 'Year: %s<br>Month: %s<br>Murders: %d' % (row['year'], row['month2'], row['num_murders_year_month'])
+    df_summary['hovertemplate'] = df_summary.apply(lambda row: 'Year: %s<br>Month: %s<br>Homicides: %d' % (row['year'], row['month2'], row['num_murders_year_month'])
                                                   if row['num_murders_year_month'] > 0 else '',
                                                   axis=1)
 
@@ -184,7 +184,7 @@ def make_spiral_plot(df):
                                                (q0_75/q1, '#187C7A'),
                                                (1, '#064D51')],
                        range_color = [q0, q1],
-                       labels={"num_murders_year_month": "# murders per<br> year and month"},
+                       labels={"num_murders_year_month": "# Homicides per<br> year and month"},
                        direction = 'clockwise',
                        category_orders={'month2': np.sort(df_summary['month2'].unique()),
                                         'year': np.sort(df_summary['year'].unique())}  # Specify the order of months
@@ -364,7 +364,7 @@ def make_map(df, city):
     fig.update_traces(uirevision='persist')
 
     if city == 'all cities':
-        fig.update_traces(hovertemplate = "<b>%{hovertext}</b> <br> # Murders per 1000 capita per year: %{customdata[0]:.3f} <br>Open cases: %{customdata[1]:.1%}"),
+        fig.update_traces(hovertemplate = "<b>%{hovertext}</b> <br> # Homicides per 1000 capita per year: %{customdata[0]:.3f} <br>Open cases: %{customdata[1]:.1%}"),
     else:
         fig.update_traces(hovertemplate = "<b>%{hovertext}</b> <br> Lat: %{customdata[1]:.3f} <br> Lon: %{customdata[2]:.3f} <br> Race: %{customdata[3]} <br> Age: %{customdata[4]} <br> Gender: %{customdata[5]} <br> Reported date: %{customdata[6]}")
 
@@ -515,9 +515,9 @@ def update_figs_on_spiral_select(selected_data, selected_city, selected_race, se
 def update_title(city):
     city_list = [city for city in df['city'].unique()]
     if city in city_list:
-        return f'Murders in {city}' 
+        return f'Homicides in {city}' 
     else:
-        return 'Murders in 50 large cities in the US'
+        return 'Homicides in 50 large cities in the US'
 
 
 if __name__ == '__main__':
