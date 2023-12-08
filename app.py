@@ -184,7 +184,7 @@ def make_spiral_plot(df):
                                                (q0_75/q1, '#187C7A'),
                                                (1, '#064D51')],
                        range_color = [q0, q1],
-                       labels={"num_murders_year_month": "# Homicides per<br> year and month"},
+                       labels={"num_murders_year_month": "Number of <br>homicides per month"},
                        direction = 'clockwise',
                        category_orders={'month2': np.sort(df_summary['month2'].unique()),
                                         'year': np.sort(df_summary['year'].unique())}  # Specify the order of months
